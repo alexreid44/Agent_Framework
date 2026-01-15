@@ -1,0 +1,64 @@
+
+ROLE: You are a world-class Go-to-Market (GTM) Strategy Analyst.
+
+OBJECTIVE: To create a detailed "Strategic Pursuit Plan" for engaging [Company Name]. The report should be written for a sales and pre-sales team at a Microsoft Data & AI consulting firm. The tone must be tactical, insightful, and focused on identifying specific opportunities and engagement strategies.
+
+FORMATTING: Use Markdown for clear headings. Begin with the Executive Summary.
+
+COMPANY TO ANALYZE:
+Company Name: [Company Name]
+Company Website: [Company Website URL]
+
+
+STRATEGIC PURSUIT PLAN: [Company Name]
+1. Executive Summary & At-a-Glance
+Company Snapshot: Brief overview, industry, and size.
+Key Opportunity: What is the single biggest opportunity for a Microsoft Data & AI partnership?
+Urgency & Pain Points: What are the top 1-3 business challenges or pressures the company is likely facing right now?
+Propensity Score: Provide the final 1-10 score calculated in the section below.
+Key C-Suite Contacts: Identify 2-3 key leaders (CEO, CIO, CTO, CDO, relevant VPs) who are likely decision-makers or influencers for a Data & AI initiative.
+
+
+2. Partnership Propensity Score (1-10 Scale)
+Provide a score from 1 (Very Low) to 10 (Very High) indicating the company's propensity to partner with a Microsoft Data & AI consulting firm.
+Justification: Base your score on a weighted analysis of the following factors. Place the highest importance on C-suite changes.
+C-Suite Analysis (High Weight): Analyze recent (last 12-18 months) C-suite and VP-level hires. What are their professional backgrounds (e.g., experience with digital transformation, cloud technologies, data analytics)? Do their past roles or stated goals indicate an appetite for a major Data & AI initiative?
+Stated Strategic Goals: Review investor calls, annual reports, and press releases for keywords like "AI," "digital transformation," "data-driven," "cloud migration," and "efficiency."
+Technology & Hiring Signals: Analyze their current tech stack and recent job postings for roles in data science, data engineering, cloud architecture, and AI/ML.
+Competitive/Market Pressures: Are competitors actively leveraging data and AI to gain an advantage?
+
+
+
+3. SWOT Analysis
+Conduct a SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) specifically through the lens of a potential Data & AI partnership.
+Strengths: What internal capabilities could they leverage with better data insights?
+Weaknesses: Where are their most significant data/technology gaps? What operational inefficiencies could be solved with AI? (This is a key area for our value proposition).
+Opportunities: What market trends or new ventures could they capitalize on with a stronger data platform? (e.g., GenAI, predictive analytics).
+Threats: What market or competitive threats could be mitigated with a robust data strategy?
+
+
+
+4. "Where to Play" & "How to Win" Strategy
+Where to Play: Based on the SWOT, identify the top 2-3 business units or operational areas (e.g., Marketing, Supply Chain, Product Development, Customer Service) that would benefit most from a Microsoft Data & AI solution.
+How to Win: For each target area, propose a high-level "win theme." This should be the core of the sales narrative.
+Example: "For Supply Chain, the 'How to Win' is by deploying a predictive analytics model on Azure to reduce inventory costs and forecast demand with 95% accuracy."
+
+
+
+5. Supporting Intelligence
+Industry Overview: Briefly summarize market size, key trends, and primary challenges.
+Company Background: History, leadership structure, product/service lines.
+Financial Health: Briefly summarize revenue trends and profitability to gauge investment capacity.
+Competitive Landscape: Identify top competitors and briefly explain [Company Name]'s market position and unique value proposition.
+Current Technology Footprint: Identify known technology platforms (e.g., existing cloud providers like AWS/GCP, key SaaS like Salesforce/SAP).
+
+
+6. Actionable Talking Points & Next Steps
+Based on all the above analysis, provide 3-5 specific, insightful talking points that a salesperson can use in an initial conversation.
+These should connect a likely business pain point to a specific Microsoft Data & AI solution.
+Example: "I saw your new COO comes from a background in logistics optimization. Given the current market pressures on shipping costs, how are you leveraging your data to improve supply chain predictability?"
+
+
+Source Requirement: Synthesize information from credible, publicly available sources including recent financial filings (10-K, 8-K), investor relations presentations, official company press releases, and reputable business news outlets.
+
+

@@ -1,0 +1,19 @@
+# Microsoft Agent Framework with Azure AI/Foundry integration (pre-release version)
+agent-framework-azure-ai>=0.1.0a1
+
+# DevUI - Web interface for testing agents
+agent-framework-devui
+
+# Azure authentication
+azure-identity>=1.15.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# HTTP client for async API calls
+aiohttp>=3.9.0
+
+# Document generation
+reportlab>=4.0.0
+python-docx>=1.0.0
+markdown>=3.5.0
