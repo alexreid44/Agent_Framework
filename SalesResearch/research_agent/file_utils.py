@@ -25,7 +25,7 @@ def generate_filename(company_name: str, suffix: str = "") -> tuple[str, str]:
 
 def save_research_pdf(output_dir: Path, base_filename: str, company_name: str,
                      company_url: str, content: str) -> Path:
-    """Save research report as PDF using ReportLab.
+    """Save research report as PDF using xhtml2pdf.
 
     Args:
         output_dir: Directory to save the file
@@ -37,126 +37,116 @@ def save_research_pdf(output_dir: Path, base_filename: str, company_name: str,
     Returns:
         Path to the saved PDF file
     """
-    from reportlab.lib.pagesizes import letter
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import inch
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.enums import TA_LEFT, TA_CENTER
-    from html import unescape
+    from xhtml2pdf import pisa
 
     pdf_file = output_dir / f"{base_filename}.pdf"
 
-    # Create PDF document
-    doc = SimpleDocTemplate(
-        str(pdf_file),
-        pagesize=letter,
-        rightMargin=0.75*inch,
-        leftMargin=0.75*inch,
-        topMargin=1*inch,
-        bottomMargin=0.75*inch
-    )
+    # Create full HTML document with styling
+    full_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            @page {{
+                size: letter;
+                margin: 0.75in;
+            }}
+            body {{
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+            }}
+            h1 {{
+                color: #2c3e50;
+                border-bottom: 3px solid #3498db;
+                padding-bottom: 10px;
+                text-align: center;
+                font-size: 24pt;
+            }}
+            h2 {{
+                color: #34495e;
+                border-bottom: 2px solid #95a5a6;
+                padding-bottom: 8px;
+                margin-top: 20pt;
+                font-size: 18pt;
+            }}
+            h3 {{
+                color: #7f8c8d;
+                margin-top: 15pt;
+                font-size: 14pt;
+            }}
+            h4 {{
+                color: #95a5a6;
+                margin-top: 12pt;
+                font-size: 12pt;
+            }}
+            p {{
+                margin: 10px 0;
+                text-align: justify;
+            }}
+            ul, ol {{
+                margin: 10px 0;
+                padding-left: 30px;
+            }}
+            li {{
+                margin: 5px 0;
+            }}
+            strong {{
+                color: #2c3e50;
+            }}
+            .metadata {{
+                color: #7f8c8d;
+                font-size: 10pt;
+                margin-bottom: 30px;
+                text-align: center;
+            }}
+            table {{
+                border-collapse: collapse;
+                width: 100%;
+                margin: 15px 0;
+                page-break-inside: avoid;
+            }}
+            th {{
+                background-color: #34495e;
+                color: white;
+                padding: 8px;
+                text-align: left;
+                font-weight: bold;
+            }}
+            td {{
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }}
+            tr:nth-child(even) {{
+                background-color: #f2f2f2;
+            }}
+            a {{
+                color: #3498db;
+                word-wrap: break-word;
+            }}
+        </style>
+    </head>
+    <body>
+        <h1>Strategic Pursuit Plan: {company_name}</h1>
+        <div class="metadata">
+            <p><strong>Company URL:</strong> {company_url}</p>
+            <p><strong>Generated:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        </div>
+        <hr>
+        {content}
+    </body>
+    </html>
+    """
 
-    # Container for the 'Flowable' objects
-    elements = []
+    # Generate PDF from HTML
+    with open(pdf_file, "wb") as f:
+        pisa_status = pisa.CreatePDF(full_html, dest=f)
 
-    # Define styles
-    styles = getSampleStyleSheet()
-    title_style = ParagraphStyle(
-        'CustomTitle',
-        parent=styles['Heading1'],
-        fontSize=24,
-        textColor='#2c3e50',
-        spaceAfter=30,
-        alignment=TA_CENTER
-    )
+    if pisa_status.err:
+        raise Exception(f"PDF generation failed with error code: {pisa_status.err}")
 
-    heading1_style = ParagraphStyle(
-        'CustomHeading1',
-        parent=styles['Heading1'],
-        fontSize=18,
-        textColor='#2c3e50',
-        spaceAfter=12,
-        spaceBefore=12
-    )
-
-    heading2_style = ParagraphStyle(
-        'CustomHeading2',
-        parent=styles['Heading2'],
-        fontSize=14,
-        textColor='#34495e',
-        spaceAfter=10,
-        spaceBefore=10
-    )
-
-    heading3_style = ParagraphStyle(
-        'CustomHeading3',
-        parent=styles['Heading3'],
-        fontSize=12,
-        textColor='#7f8c8d',
-        spaceAfter=8,
-        spaceBefore=8
-    )
-
-    # Add title
-    elements.append(Paragraph(f"Strategic Pursuit Plan: {company_name}", title_style))
-    elements.append(Spacer(1, 0.2*inch))
-
-    # Add metadata
-    metadata_style = ParagraphStyle(
-        'Metadata',
-        parent=styles['Normal'],
-        fontSize=10,
-        textColor='#7f8c8d'
-    )
-    elements.append(Paragraph(f"<b>Company URL:</b> {company_url}", metadata_style))
-    elements.append(Paragraph(f"<b>Generated:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", metadata_style))
-    elements.append(Spacer(1, 0.3*inch))
-
-    # Parse HTML content and convert to ReportLab elements
-    # Clean up the HTML and convert to ReportLab-compatible format
-    content = unescape(content)
-
-    # Split by common HTML tags and process
-    import re
-    # Simple regex-based HTML parsing for ReportLab
-    html_parts = re.split(r'(<h[1-6]>.*?</h[1-6]>|<p>.*?</p>|<ul>.*?</ul>|<ol>.*?</ol>|<li>.*?</li>)', content, flags=re.DOTALL)
-
-    for part in html_parts:
-        part = part.strip()
-        if not part:
-            continue
-
-        # Headers
-        if re.match(r'<h2>', part):
-            text = re.sub(r'<.*?>', '', part)
-            if text.strip():
-                elements.append(Paragraph(text, heading1_style))
-        elif re.match(r'<h3>', part):
-            text = re.sub(r'<.*?>', '', part)
-            if text.strip():
-                elements.append(Paragraph(text, heading2_style))
-        elif re.match(r'<h4>', part):
-            text = re.sub(r'<.*?>', '', part)
-            if text.strip():
-                elements.append(Paragraph(text, heading3_style))
-        # Paragraphs
-        elif re.match(r'<p>', part):
-            # Keep basic HTML tags for ReportLab
-            text = part.replace('<p>', '').replace('</p>', '').strip()
-            if text:
-                elements.append(Paragraph(text, styles['Normal']))
-                elements.append(Spacer(1, 0.1*inch))
-        # List items
-        elif re.match(r'<li>', part):
-            text = part.replace('<li>', '').replace('</li>', '').strip()
-            if text:
-                elements.append(Paragraph(f"• {text}", styles['Normal']))
-        # Plain text fallback
-        elif part and not re.match(r'<[^>]+>', part):
-            elements.append(Paragraph(part, styles['Normal']))
-
-    # Build PDF
-    doc.build(elements)
     return pdf_file
 
 
