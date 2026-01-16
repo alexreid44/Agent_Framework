@@ -11,7 +11,7 @@ from azure.identity.aio import AzureCliCredential
 from dotenv import load_dotenv
 
 # Import helper modules
-from .gemini_api import call_gemini_deep_research, generate_business_model_canvas
+from .gemini_api import call_gemini_deep_research, analyze_with_gemini
 from .file_utils import generate_filename, save_research_pdf, save_business_model_canvas_docx
 
 # Load environment variables
@@ -42,10 +42,15 @@ async def gemini_deep_research(
 
     # Replace placeholders with actual company information
     prompt = prompt_template.replace("[Company Name]", company_name)
-    prompt = prompt.replace("[Enter Company Website URL]", company_url)
+    prompt = prompt.replace("[Company URL]", company_url)
+
+    print(f"\n🔍 Starting deep research on {company_name}...")
 
     # Call Gemini Deep Research API
     research_result = await call_gemini_deep_research(prompt)
+
+    print(f"✅ Deep research completed!\n")
+    print(research_result)
 
     # Prepare output directory
     output_dir = Path(__file__).parent.parent / "deep_research"
@@ -56,39 +61,43 @@ async def gemini_deep_research(
     bmc_filename, _ = generate_filename(company_name, suffix="_BusinessModelCanvas")
 
     try:
+        print(f"💾 Saving research report as PDF...")
+
         # Save research as PDF
         pdf_file = save_research_pdf(
             output_dir, base_filename, company_name, company_url, research_result
         )
 
-        # Generate Business Model Canvas using Gemini 2.5 Pro
-        bmc_result = await generate_business_model_canvas(company_name, research_result)
+        print(f"✅ Report saved: {pdf_file.name}\n")
+        print(f"🧠 Generating Business Model Canvas from research...")
 
-        # Save Business Model Canvas as Word document
-        try:
-            docx_file = save_business_model_canvas_docx(
-                output_dir, bmc_filename, company_name, company_url, bmc_result
-            )
+        # Generate Business Model Canvas from the research text
+        bmc_prompt = f"""Analyze this research on {company_name} and create a Business Model Canvas.
 
-            return (
-                f"{research_result}\n\n"
-                f"---\n\n"
-                f"✅ Research saved to: {pdf_file.name}\n"
-                f"✅ Business Model Canvas saved to: {docx_file.name}"
-            )
-        except Exception as docx_error:
-            return (
-                f"{research_result}\n\n"
-                f"---\n\n"
-                f"✅ Research saved to: {pdf_file.name}\n"
-                f"⚠️ Business Model Canvas generation failed: {str(docx_error)}"
-            )
+{research_result}
 
-    except ImportError as e:
+Create sections: Customer Segments, Value Propositions, Channels, Customer Relationships, Revenue Streams, Key Resources, Key Activities, Key Partnerships, Cost Structure.
+
+**IMPORTANT: Format your response as clean HTML using semantic tags like <h2>, <h3>, <p>, <ul>, <li>, <strong>, etc. Do NOT use markdown. Do NOT include <!DOCTYPE> or <html> wrapper tags - just the content HTML.**"""
+
+        bmc_result = await analyze_with_gemini(bmc_prompt)
+
+        print(f"✅ Business Model Canvas generated!\n")
+        print(f"💾 Saving Business Model Canvas as Word document...")
+
+        # Save Business Model Canvas
+        docx_file = save_business_model_canvas_docx(
+            output_dir, bmc_filename, company_name, company_url, bmc_result
+        )
+
+        print(f"✅ Document saved: {docx_file.name}\n")
+        print(f"🎉 All done!\n")
+
         return (
             f"{research_result}\n\n"
             f"---\n\n"
-            f"⚠️ Required library not installed: {str(e)}"
+            f"✅ Research: {pdf_file.name}\n"
+            f"✅ Business Model Canvas: {docx_file.name}"
         )
     except Exception as e:
         return (
@@ -115,4 +124,5 @@ agent = ChatAgent(
         agent_description="A research assistant that performs deep research on companies using Gemini Deep Research",
     ),
     tools=[gemini_deep_research],
+    greeting="Hello! I am your research assistant. Which company would you like to research today?",
 )

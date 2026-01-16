@@ -9,3 +9,4 @@ from .agent import agent
 
 # This export is required for DevUI discovery
 __all__ = ["agent"]
+__all__ = ["agent"]

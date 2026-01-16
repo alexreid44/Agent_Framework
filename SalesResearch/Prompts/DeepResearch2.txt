@@ -1,0 +1,19 @@
+
+I’d like a comprehensive research report on [Company Name].
+
+First, provide an overview of the industry in which it operates, including market size, major trends, key drivers, the overall growth forecast, and the top industry challenges.
+
+Next, detail the company’s background—including its history, leadership, product/service lines, and notable milestones. Please include any recent leadership (C-Suite, VP, etc.) level changes/departures in the organization or openings.  Please include a financial performance analysis, highlighting revenue trends, profitability, KPIs, and key investments.
+
+Then, analyze the competitive landscape, identifying the top competitors, comparing market share, and explaining how [Company Name] positions itself. I want to understand how [Company Name] differentiates itself, including its unique value proposition, brand strengths, and any special capabilities that give it a competitive edge.
+
+I’d also like an in-depth review of the growth opportunities—potential new markets, products, or partnerships—and how emerging industry trends or global developments might open up further expansion. Identify the risks and challenges that may affect [Company Name]’s operations or strategic plans.
+
+I want a good understanding of their "Where to Play" and "How to Win" strategies.
+
+Finally, synthesize your findings into an analysis and provide actionable recommendations. Where do you see the company heading in the short and long term, and what strategic moves would best position [Company Name] for ongoing success?
+
+**IMPORTANT: Format your entire response as clean HTML. Use semantic HTML tags like <h2>, <h3>, <p>, <ul>, <li>, <strong>, etc. Do NOT use markdown. Do NOT include <!DOCTYPE> or <html> wrapper tags - just the content HTML.**
+
+Company Name = [Company Name] ([Company URL])
+

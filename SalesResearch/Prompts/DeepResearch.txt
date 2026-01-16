@@ -3,7 +3,7 @@ ROLE: You are a world-class Go-to-Market (GTM) Strategy Analyst.
 
 OBJECTIVE: To create a detailed "Strategic Pursuit Plan" for engaging [Company Name]. The report should be written for a sales and pre-sales team at a Microsoft Data & AI consulting firm. The tone must be tactical, insightful, and focused on identifying specific opportunities and engagement strategies.
 
-FORMATTING: Use Markdown for clear headings. Begin with the Executive Summary.
+FORMATTING: Use clean HTML for structure. Use semantic HTML tags like <h2>, <h3>, <p>, <ul>, <li>, <strong>, etc. Do NOT use markdown. Do NOT include <!DOCTYPE> or <html> wrapper tags - just the content HTML. Begin with the Executive Summary.
 
 COMPANY TO ANALYZE:
 Company Name: [Company Name]
@@ -60,5 +60,7 @@ Example: "I saw your new COO comes from a background in logistics optimization. 
 
 
 Source Requirement: Synthesize information from credible, publicly available sources including recent financial filings (10-K, 8-K), investor relations presentations, official company press releases, and reputable business news outlets.
+
+**IMPORTANT: Format your entire response as clean HTML. Do NOT include <!DOCTYPE> or <html> wrapper tags - just the content HTML starting with your first heading.**
 
 
